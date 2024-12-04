@@ -17,10 +17,7 @@ border-radius: 0px;
 font-family:'inter';
 color: black;
 background-image: none;
-border-top: 1px solid #ff0000;
-border-right: 1px solid #548235;
-border-bottom: 1px solid #dfda00;
-border-left: 1px solid #0070c0;
+border: 1px solid #000000;
 box-shadow: 0 0 0 0;
 text-shadow: none;
 font-size: 0.8em;
@@ -39,10 +36,7 @@ line-height:0px
   background-color:#f9f9f9;
   background-image: none;
   transition: none;
-  border-top: 1px solid #ff0000;
-  border-right: 1px solid #548235;
-  border-bottom: 1px solid #dfda00;
-  border-left: 1px solid #0070c0;
+  border: 1px solid #000000;
 
 }
 
