@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_19_080116) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_28_150057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_19_080116) do
     t.string "category_title"
     t.text "content"
     t.index ["profil_id"], name: "index_cv_categories_on_profil_id"
+  end
+
+  create_table "inner_portraits", force: :cascade do |t|
+    t.string "slug"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "photos", force: :cascade do |t|

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   get 'newsletter', to: 'profil#newsletter'
 
+  get 'innerportrait/:slug', to: 'inner_portraits#show'
+
   # Define the root path route ("/")
 
   # Defines the root path route ("/")
