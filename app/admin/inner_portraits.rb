@@ -41,7 +41,9 @@ ActiveAdmin.register InnerPortrait do
   show do
     attributes_table do
       row :id
-      row "Name", :slug
+      row "Name" do |inner_portrait|
+      inner_portrait.slug
+    end
       row :url
       row :password do |inner_portrait|
         inner_portrait.password.present? ? inner_portrait.password : "No password"
@@ -49,7 +51,7 @@ ActiveAdmin.register InnerPortrait do
       row :created_at
       row :updated_at
     end
-    active_admin_comments
+   
   end
 
 end
