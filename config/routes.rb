@@ -17,7 +17,9 @@ Rails.application.routes.draw do
 
   get 'newsletter', to: 'profil#newsletter'
 
-  get 'innerportrait/:slug', to: 'inner_portraits#show'
+  get 'innerportrait/:slug', to: 'inner_portraits#show', as: :inner_portrait
+  post 'innerportrait/:slug/check_password', to: 'inner_portraits#check_password', as: :check_password
+
 
   # Define the root path route ("/")
 

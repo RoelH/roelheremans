@@ -9,10 +9,30 @@
           <h1><%= @inner_portrait.slug.capitalize %></h1>
         </div>
         <div class="image">
-        <audio controls style="width: 100%;">
-            <source src="<%= @inner_portrait.url %>" type="audio/mpeg" />
-            Votre navigateur ne supporte pas la lecture audio.
+        <%if @authorized_audio %>
+          <audio controls style="width: 100%;">
+              <source src="<%= @inner_portrait.url %>" type="audio/mpeg" />
+              Votre navigateur ne supporte pas la lecture audio.
           </audio>
+        <% else %>
+
+            <%= form_with url: check_password_path(@inner_portrait.slug), method: :post, turbo: false do |form| %>
+            <div class="flex-col gap-1">
+              <div class="form-group flex-col gap-1">
+                <%= form.label :password, "Enter password:" %>
+                <%= form.password_field :password, class: "form-control", required: true %>
+              </div>
+              <div class="form-group d-flex justify-content-end">
+                <%= form.submit "submit", id: "button-pass" %>
+              </div>
+            <% end %>
+          </div>
+        <%end%>
+        <%if flash[:alert]%>
+          <div class="red margintop1">
+            <%= flash[:alert] %>
+          </div>
+        <%end%>
         </div>
       </div>
     </div>
