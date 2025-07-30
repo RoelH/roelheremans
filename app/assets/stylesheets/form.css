@@ -20,7 +20,7 @@ background-image: none;
 border: 1px solid #000000;
 box-shadow: 0 0 0 0;
 text-shadow: none;
-font-size: 0.8em;
+font-size: 1em;
 height: 3em;
 line-height:0px
 
@@ -63,4 +63,19 @@ line-height:0px
   #mc_embed_signup form{
     font-size: 0.6em;
   }
+}
+
+#button-pass{
+background-color:#f9f9f9;
+border-radius: 0px;
+font-family:'inter';
+color: black;
+background-image: none;
+border: 1px solid #000000;
+box-shadow: 0 0 0 0;
+text-shadow: none;
+font-size: 1em;
+font-weight: normal;
+height: 3em;
+line-height:0px
 }
