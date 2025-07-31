@@ -15,7 +15,7 @@ ActiveAdmin.register InnerPortrait do
   #   permitted
   # end
 
-  permit_params :slug, :url, :password
+  permit_params :slug, :url, :password, :text
 
   index do
     selectable_column
@@ -25,6 +25,9 @@ ActiveAdmin.register InnerPortrait do
     column :password do |inner_portrait|
       inner_portrait.password.present? ? inner_portrait.password : "No password"
     end
+    column :text do |inner_portrait|
+      inner_portrait.text.present? ? inner_portrait.text.truncate(50) : "No text"
+    end
     actions
   end
 
@@ -32,6 +35,7 @@ ActiveAdmin.register InnerPortrait do
     f.inputs do
 
       f.input :slug, label: "name"
+      f.input :text, as: :text, input_html: { rows: 10 }, label: "Text"
       f.input :url
       f.input :password, as: :string
     end
@@ -48,10 +52,13 @@ ActiveAdmin.register InnerPortrait do
       row :password do |inner_portrait|
         inner_portrait.password.present? ? inner_portrait.password : "No password"
       end
+      row :text do |inner_portrait|
+        inner_portrait.text.present? ? inner_portrait.text : "No text"
+      end
       row :created_at
       row :updated_at
     end
-   
+
   end
 
 end

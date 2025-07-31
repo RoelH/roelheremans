@@ -8,6 +8,11 @@
         <div class="entete">
           <h1><%= @inner_portrait.slug.capitalize %></h1>
         </div>
+        <%if @inner_portrait.text.present?%>
+          <div class="paragraph margintop1 marginbottom4">
+            <%= simple_format(@inner_portrait.text, {}, :sanitize => false)%>
+          </div>
+        <%end%>
         <div class="image">
         <%if @authorized_audio %>
           <audio controls style="width: 100%;">

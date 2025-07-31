@@ -3,7 +3,11 @@ class InnerPortraitsController < ApplicationController
   before_action :set_inner_portrait, only: [:show,:check_password]
 
   def show
-    @authorized_audio = session[:authorized_slugs]&.include?(@inner_portrait.slug)
+    if @inner_portrait.password == ""
+      @authorized_audio = true
+    else
+      @authorized_audio = session[:authorized_slugs]&.include?(@inner_portrait.slug)
+    end
    render_or_redirect(:show)
   end
 
