@@ -1,6 +1,6 @@
 class InnerPortrait < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
-  validates :url, presence: true, format: { with: /\Ahttps:\/\/res\.cloudinary\.com\/.*\.mp3\z/i, message: "must be a valid Cloudinary URL ending with .mp3" }
+  validates :url, presence: true, uniqueness: true, format: { with: /\Ahttps:\/\/res\.cloudinary\.com\/.*\.mp3\z/i, message: "must be a valid Cloudinary URL ending with .mp3" }
 
 
   before_save :downcase
