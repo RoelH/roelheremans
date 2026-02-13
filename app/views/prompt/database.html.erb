@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prompt Database — roelheremans</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f9f9f9;
+        color: #000;
+        margin: 2em;
+        font-size: 0.9em;
+      }
+      h1 {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 1.5em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        text-align: left;
+        padding: 0.6em 1em;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+      }
+      th {
+        font-weight: bold;
+        border-bottom: 2px solid #000;
+      }
+      td.cell-text {
+        max-width: 300px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .empty {
+        color: #999;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Prompt Database</h1>
+
+    <% if @submissions.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Prompt</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @submissions.each do |s| %>
+            <tr>
+              <td><%= s.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td><%= s.name.present? ? h(s.name) : "—" %></td>
+              <td><%= s.email.present? ? h(s.email) : "—" %></td>
+              <td class="cell-text"><%= h(s.prompt_text) %></td>
+              <td class="cell-text"><%= s.answer_text.present? ? h(s.answer_text) : "—" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="empty">No submissions yet.</p>
+    <% end %>
+  </body>
+</html>

@@ -79,3 +79,83 @@ font-weight: normal;
 height: 3em;
 line-height:0px
 }
+
+/* Prompt form */
+.prompt-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.prompt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.prompt-field label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9em;
+  color: #000;
+}
+
+.prompt-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9em;
+  padding: 0.6em;
+  border: 1px solid #000;
+  border-radius: 0;
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.prompt-textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9em;
+  padding: 0.6em;
+  border: 1px solid #000;
+  border-radius: 0;
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+#button-prompt {
+  background-color: #f9f9f9;
+  border-radius: 0;
+  font-family: 'Inter', sans-serif;
+  color: #000;
+  background-image: none;
+  border: 1px solid #000;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: 1em;
+  font-weight: normal;
+  height: 3em;
+  line-height: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+#button-prompt:hover {
+  background-color: #eee;
+}
+
+@media (max-width: 480px) {
+  .prompt-field label {
+    font-size: 0.7em;
+  }
+  .prompt-input,
+  .prompt-textarea {
+    font-size: 0.7em;
+  }
+  #button-prompt {
+    font-size: 0.7em;
+  }
+}
+

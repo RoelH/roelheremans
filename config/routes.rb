@@ -21,6 +21,11 @@ Rails.application.routes.draw do
   post 'innerportrait/:slug/check_password', to: 'inner_portraits#check_password', as: :check_password
 
 
+  # Prompt archive
+  get 'prompt', to: 'prompt#index'
+  post 'prompt/submit', to: 'prompt#submit', as: :prompt_submit
+  get 'prompt_database', to: 'prompt#database'
+
   # Define the root path route ("/")
 
   # Defines the root path route ("/")

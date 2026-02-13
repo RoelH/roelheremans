@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Test User
+  email: test@example.com
+  prompt_text: What is art?
+  answer_text: Art is expression.
+
+two:
+  name:
+  email:
+  prompt_text: Define creativity.
+  answer_text:

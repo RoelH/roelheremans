@@ -1,0 +1,61 @@
+<div class="flex">
+  <div class="scroll">
+      <%= render 'shared/list'%>
+  </div>
+  <div class="show">
+    <div class="container">
+      <div class="work">
+        <div class="entete">
+          <h1>Prompt</h1>
+        </div>
+
+        <% if flash[:notice] %>
+          <div class="paragraph marginbottom1" style="color: #568337;">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+
+        <div class="paragraph marginbottom1">
+          <p>Enter a prompt.</p>
+          <p>Paste the answer you receive.</p>
+          <p>Submit to the archive.</p>
+        </div>
+
+        <% if @prompt_submission.errors.any? %>
+          <div class="red marginbottom1">
+            <% @prompt_submission.errors.full_messages.each do |msg| %>
+              <p><%= msg %></p>
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= form_with model: @prompt_submission, url: prompt_submit_path, method: :post, local: true, class: "prompt-form" do |f| %>
+          <div class="prompt-field">
+            <%= f.label :name, "Name (optional)" %>
+            <%= f.text_field :name, class: "prompt-input" %>
+          </div>
+
+          <div class="prompt-field">
+            <%= f.label :email, "Email (optional)" %>
+            <%= f.email_field :email, class: "prompt-input" %>
+          </div>
+
+          <div class="prompt-field">
+            <%= f.label :prompt_text, "Prompt" %>
+            <%= f.text_area :prompt_text, class: "prompt-textarea", rows: 5 %>
+          </div>
+
+          <div class="prompt-field">
+            <%= f.label :answer_text, "Answer" %>
+            <%= f.text_area :answer_text, class: "prompt-textarea", rows: 8 %>
+          </div>
+
+          <div class="prompt-field">
+            <%= f.submit "Submit", id: "button-prompt" %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
