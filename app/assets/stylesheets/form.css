@@ -92,6 +92,7 @@ line-height:0px
   display: flex;
   flex-direction: column;
   gap: 0.4em;
+  width: 100%;
 }
 
 .prompt-field label {
@@ -100,7 +101,7 @@ line-height:0px
   color: #000;
 }
 
-.prompt-input {
+.prompt-form .prompt-field .prompt-input {
   font-family: 'Inter', sans-serif;
   font-size: 0.9em;
   padding: 0.6em;
@@ -110,6 +111,7 @@ line-height:0px
   color: #000;
   width: 100%;
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 .prompt-textarea {
@@ -140,6 +142,7 @@ line-height:0px
   line-height: 0;
   cursor: pointer;
   width: 100%;
+  box-sizing: border-box;
 }
 
 #button-prompt:hover {
@@ -170,10 +173,7 @@ line-height:0px
 
 /* Prompt preview row */
 .prompt-preview-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.6em;
+  position: relative;
   width: 100%;
 }
 
@@ -182,17 +182,22 @@ line-height:0px
   font-size: 0.85em;
   color: #555;
   padding: 0.6em;
+  padding-right: 0.6em;
   border: 1px solid #ccc;
   background-color: #f5f5f5;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1;
-  min-width: 0;
   line-height: 1.4;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .prompt-copy-btn {
+  position: absolute;
+  right: -5em;
+  top: 50%;
+  transform: translateY(-50%);
   background-color: #f9f9f9;
   border: 1px solid #000;
   font-family: 'Inter', sans-serif;
@@ -201,7 +206,6 @@ line-height:0px
   padding: 0.6em 1.2em;
   cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .prompt-copy-btn:hover {
