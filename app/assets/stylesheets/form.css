@@ -183,7 +183,7 @@ line-height:0px
   color: #555;
   padding: 0.6em;
   padding-right: 0.6em;
-  border: 1px solid #ccc;
+  border: 1px solid #000;
   background-color: #f5f5f5;
   white-space: nowrap;
   overflow: hidden;
@@ -198,22 +198,27 @@ line-height:0px
   left: calc(100% + 0.8em);
   top: 50%;
   transform: translateY(-50%);
+  background: #fff !important;
   background-color: #fff !important;
+  background-image: none !important;
   border: 1px solid #000 !important;
   border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
   font-family: 'Inter', sans-serif;
   font-size: 0.9em;
   color: #000 !important;
   padding: 0.6em 1.2em;
   cursor: pointer;
   white-space: nowrap;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
 .prompt-copy-btn:hover {
-  background-color: #f0f0f0;
+  background: #f0f0f0 !important;
+  background-color: #f0f0f0 !important;
 }
 
 /* Compact answer field */
