@@ -195,18 +195,21 @@ line-height:0px
 
 .prompt-copy-btn {
   position: absolute;
-  right: -5.5em;
+  left: calc(100% + 0.8em);
   top: 50%;
   transform: translateY(-50%);
-  background-color: #fff;
-  border: 1px solid #000;
-  border-radius: 0;
+  background-color: #fff !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
   font-family: 'Inter', sans-serif;
   font-size: 0.9em;
-  color: #000;
+  color: #000 !important;
   padding: 0.6em 1.2em;
   cursor: pointer;
   white-space: nowrap;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .prompt-copy-btn:hover {
