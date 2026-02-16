@@ -82,7 +82,7 @@ line-height:0px
 
 /* Prompt form */
 .prompt-form {
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 1.2em;
