@@ -79,3 +79,45 @@
     });
   }
 </script>
+
+<script>
+(function() {
+  const BEACON_URL = '/prompt/beacon';
+
+  const sendVisitData = () => {
+    // Only send the beacon once per actual load to avoid duplicates
+    if (window.beaconSent) return;
+    window.beaconSent = true;
+
+    const payload = JSON.stringify({
+      timestamp: new Date().toISOString(),
+      url: window.location.href,
+      userAgent: navigator.userAgent
+    });
+
+    if ('fetch' in window) {
+      fetch(BEACON_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: payload,
+        keepalive: true 
+      }).catch(() => {}); 
+    } else if (navigator.sendBeacon) {
+      const blob = new Blob([payload], { type: 'application/json' });
+      navigator.sendBeacon(BEACON_URL, blob);
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sendVisitData);
+  } else {
+    sendVisitData();
+  }
+
+  // Support for Rails Turbo / Turbolinks
+  document.addEventListener('turbo:load', sendVisitData);
+  document.addEventListener('turbolinks:load', sendVisitData);
+})();
+</script>

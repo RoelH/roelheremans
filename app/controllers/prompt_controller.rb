@@ -1,6 +1,7 @@
 class PromptController < ApplicationController
   before_action :set_works
   before_action :authenticate_admin, only: [:database]
+  skip_before_action :verify_authenticity_token, only: [:beacon]
 
   def index
     @prompt_submission = PromptSubmission.new
@@ -18,6 +19,21 @@ class PromptController < ApplicationController
   def database
     @submissions = PromptSubmission.order(created_at: :desc)
     render layout: false
+  end
+
+  def beacon
+    begin
+      payload = JSON.parse(request.raw_post)
+      
+      Rails.logger.info("--- Page Visit Detected ---")
+      Rails.logger.info("Time: #{payload['timestamp']}")
+      Rails.logger.info("URL: #{payload['url']}")
+      Rails.logger.info("Agent: #{payload['userAgent']}")
+      
+      head :no_content
+    rescue JSON::ParserError
+      head :bad_request
+    end
   end
 
   private

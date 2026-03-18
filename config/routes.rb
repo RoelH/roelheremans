@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'prompt', to: 'prompt#index'
   post 'prompt/submit', to: 'prompt#submit', as: :prompt_submit
   get 'prompt_database', to: 'prompt#database'
+  post 'prompt/beacon', to: 'prompt#beacon'
 
   # Define the root path route ("/")
 
