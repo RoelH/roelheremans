@@ -30,10 +30,17 @@ class PromptController < ApplicationController
       Rails.logger.info("URL: #{payload['url']}")
       Rails.logger.info("Agent: #{payload['userAgent']}")
       
+      Rails.cache.write('last_beacon_timestamp', Time.now.to_i, expires_in: 1.hour)
+
       head :no_content
     rescue JSON::ParserError
       head :bad_request
     end
+  end
+
+  def beacon_status
+    timestamp = Rails.cache.read('last_beacon_timestamp') || 0
+    render json: { latest_timestamp: timestamp }
   end
 
   private
