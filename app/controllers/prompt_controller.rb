@@ -22,20 +22,11 @@ class PromptController < ApplicationController
   end
 
   def beacon
-    begin
-      payload = JSON.parse(request.raw_post)
-      
-      Rails.logger.info("--- Page Visit Detected ---")
-      Rails.logger.info("Time: #{payload['timestamp']}")
-      Rails.logger.info("URL: #{payload['url']}")
-      Rails.logger.info("Agent: #{payload['userAgent']}")
-      
-      Rails.cache.write('last_beacon_timestamp', Time.now.to_i, expires_in: 1.hour)
-
-      head :no_content
-    rescue JSON::ParserError
-      head :bad_request
-    end
+    Rails.cache.write('last_beacon_timestamp', Time.now.to_i, expires_in: 1.hour)
+    head :no_content
+  rescue StandardError => e
+    Rails.logger.error("Beacon Error: #{e.message}")
+    head :bad_request
   end
 
   def beacon_status
