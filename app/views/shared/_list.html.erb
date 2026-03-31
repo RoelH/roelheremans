@@ -25,7 +25,7 @@
     <%# ── About / CV / Contact ─────────────────────────────────── %>
     <% base_index = @works.size %>
 
-    <li class="margintop2">
+    <li>
       <% is_active = current_page?(about_path) ? "color-active#{(base_index + 1) % 4}" : "color-hover#{(base_index + 1) % 4}" %>
       <%= link_to "About", about_path, class: "link #{is_active}" %>
     </li>
@@ -40,7 +40,7 @@
 
 
     <%# ── Newsletter ───────────────────────────────────────────── %>
-    <li>
+    <li class="margintop2">
       <% is_active = current_page?(newsletter_path) ? "color-active#{(base_index + 4) % 4}" : "color-hover#{(base_index + 4) % 4}" %>
       <%= link_to "Newsletter", newsletter_path, class: "link #{is_active}" %>
     </li>
