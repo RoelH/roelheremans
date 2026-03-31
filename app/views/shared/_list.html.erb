@@ -1,46 +1,54 @@
- <div class="list">
-        <%= link_to root_path do %>
-          <%=image_tag 'https://res.cloudinary.com/dmbutdgsi/image/upload/v1611342976/logo_ef1290df81.png', class:"logo" %>
-        <%end %>
-        <ul>
-          <% @works.each_with_index do |work, index| %>
-            <% hover_class = "color-hover#{(index + 1) % 4}" %>
-            <% active_class = "color-active#{(index + 1) % 4}" %>
-            <% is_active = current_page?(work_path(work)) ? active_class : hover_class %>
-            <li>
+<% on_work_page = local_assigns[:on_work_page] || false %>
+<div class="list" data-controller="work-toggle" data-work-toggle-on-work-page-value="<%= on_work_page %>">
+  <%= link_to root_path do %>
+    <%=image_tag 'https://res.cloudinary.com/dmbutdgsi/image/upload/v1611342976/logo_ef1290df81.png', class:"logo" %>
+  <%end %>
+  <ul>
 
-              <%= link_to work.title, work_path(work), class: "link #{is_active}" %>
+    <%# ── Work toggle ──────────────────────────────────────────── %>
+    <li>
+      <button class="link work-trigger" data-work-toggle-target="trigger" data-action="click->work-toggle#toggle">Work</button>
+    </li>
 
-            </li>
-          <% end %>
+    <%# ── Collapsible project list ─────────────────────────────── %>
+    <ul class="work-list" data-work-toggle-target="list">
+      <% @works.each_with_index do |work, index| %>
+        <% hover_class  = "color-hover#{(index + 1) % 4}" %>
+        <% active_class = "color-active#{(index + 1) % 4}" %>
+        <% is_active    = current_page?(work_path(work)) ? active_class : hover_class %>
+        <li>
+          <%= link_to work.title, work_path(work), class: "link #{is_active}" %>
+        </li>
+      <% end %>
+    </ul>
 
-          <%base_index = @works.size%>
-          <% hover_class = base_index % 4 %>
-          <% active_class = base_index % 4 %>
+    <%# ── About / CV / Contact ─────────────────────────────────── %>
+    <% base_index = @works.size %>
 
+    <li class="margintop2">
+      <% is_active = current_page?(about_path) ? "color-active#{(base_index + 1) % 4}" : "color-hover#{(base_index + 1) % 4}" %>
+      <%= link_to "About", about_path, class: "link #{is_active}" %>
+    </li>
+    <li>
+      <% is_active = current_page?(cv_path) ? "color-active#{(base_index + 2) % 4}" : "color-hover#{(base_index + 2) % 4}" %>
+      <%= link_to "CV", cv_path, class: "link #{is_active}" %>
+    </li>
+    <li>
+      <% is_active = current_page?(contact_path) ? "color-active#{(base_index + 3) % 4}" : "color-hover#{(base_index + 3) % 4}" %>
+      <%= link_to "Contact", contact_path, class: "link #{is_active}" %>
+    </li>
 
-          <%# <div class="box">
-          <div class="point"></div></div> %>
-          <li class="margintop2">
-            <% is_active = current_page?(about_path) ? "color-active#{(base_index + 1) %4}" : "color-hover#{(base_index +1)%4}" %>
-            <%= link_to "About", about_path, class: "link #{is_active}" %>
-          </li>
-          <li>
-            <% is_active = current_page?(cv_path) ? "color-active#{(base_index + 2) %4}" : "color-hover#{(base_index + 2) %4}" %>
-            <%= link_to "CV", cv_path, class: "link #{is_active}" %>
-          </li>
-          <li>
-          <% is_active = current_page?(contact_path) ? "color-active#{(base_index + 3) %4}" : "color-hover#{(base_index + 3) %4}" %>
-            <%= link_to "Contact", contact_path, class: "link #{is_active}" %>
-          </li>
-           <%# <div class="box">
-          <div class="point"></div></div> %>
-          <li class="margintop2">
-            <% is_active = current_page?(newsletter_path) ? "color-active#{(base_index + 4) %4}" : "color-hover#{(base_index + 4) %4}" %>
-            <%= link_to "Newsletter", newsletter_path, class: "link #{is_active}" %>
-          </li>
+    <%# ── Divider ──────────────────────────────────────────────── %>
+    <li class="margintop2">
+      <hr class="nav-divider">
+    </li>
 
+    <%# ── Newsletter ───────────────────────────────────────────── %>
+    <li>
+      <% is_active = current_page?(newsletter_path) ? "color-active#{(base_index + 4) % 4}" : "color-hover#{(base_index + 4) % 4}" %>
+      <%= link_to "Newsletter", newsletter_path, class: "link #{is_active}" %>
+    </li>
 
-          <%= render 'shared/copyright' %>
-        </ul>
-      </div>
+    <%= render 'shared/copyright' %>
+  </ul>
+</div>
