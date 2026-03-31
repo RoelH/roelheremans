@@ -192,6 +192,21 @@ height: 100%;
   text-align: left;
   display: block;
   width: 100%;
+  font-weight: normal;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.work-trigger:hover,
+.work-trigger:focus,
+.work-trigger:active,
+.work-trigger:focus-visible {
+  background: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 /* Collapsible project list */
