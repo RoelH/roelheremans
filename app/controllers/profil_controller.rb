@@ -4,10 +4,6 @@ class ProfilController < ApplicationController
   def about
   end
 
-  def speaking
-    @speaking = Speaking.instance
-  end
-
   def cv
     @cv_categories = @profil.cv_categories.order(:id)
   end
