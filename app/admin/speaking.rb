@@ -1,6 +1,8 @@
 ActiveAdmin.register Speaking do
   permit_params :text, :pic_url, :slug, :seo_title, :seo_description
 
+  menu if: proc { Speaking.admin_backend_ready? }
+
   config.filters = false
 
   action_item :manage_logos, only: %i[index show edit] do
@@ -42,6 +44,18 @@ ActiveAdmin.register Speaking do
       else
         para 'Speaking logos are unavailable until the logo and Active Storage tables exist in this environment.'
       end
+    end
+  end
+
+  controller do
+    before_action :ensure_speaking_backend_ready!
+
+    private
+
+    def ensure_speaking_backend_ready!
+      return if Speaking.admin_backend_ready?
+
+      redirect_to admin_root_path, alert: 'Speaking content is unavailable until the speakings table is present in this environment.'
     end
   end
 end
