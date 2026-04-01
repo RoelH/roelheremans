@@ -5,8 +5,8 @@ class ProfilController < ApplicationController
   end
 
   def speaking
-    @speaking = Speaking.instance
-    @speaking_logos = @speaking.speaking_logos.active.ordered.with_attached_image
+    @speaking = Speaking.safe_instance
+    @speaking_logos = @speaking.active_logos_for_frontend
   end
 
   def cv
