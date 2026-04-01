@@ -1,0 +1,41 @@
+<% if speaking_logos.present? %>
+  <section class="speaking-logos" aria-labelledby="speaking-logos-title">
+    <h2 id="speaking-logos-title" class="speaking-logos__title">Selected organizations</h2>
+    <div class="speaking-logos__grid">
+      <% speaking_logos.each do |logo| %>
+        <% image_options = {
+          alt: logo.alt_text,
+          class: 'speaking-logos__image',
+          loading: 'lazy',
+          decoding: 'async'
+        } %>
+        <% if logo.image.metadata['width'].present? && logo.image.metadata['height'].present? %>
+          <% image_options[:width] = logo.image.metadata['width'] %>
+          <% image_options[:height] = logo.image.metadata['height'] %>
+        <% end %>
+        <% link_options = {
+          class: 'speaking-logos__link',
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        } %>
+        <% link_options[:'aria-label'] = logo.link_label if logo.link_label.present? %>
+
+        <div class="speaking-logos__item">
+          <% if logo.destination_url.present? %>
+            <%= link_to logo.destination_url, **link_options do %>
+              <span class="speaking-logos__media">
+                <%= image_tag logo.image, **image_options %>
+              </span>
+            <% end %>
+          <% else %>
+            <span class="speaking-logos__link speaking-logos__link--static">
+              <span class="speaking-logos__media">
+                <%= image_tag logo.image, **image_options %>
+              </span>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>

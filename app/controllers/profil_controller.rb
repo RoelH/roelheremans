@@ -6,6 +6,7 @@ class ProfilController < ApplicationController
 
   def speaking
     @speaking = Speaking.instance
+    @speaking_logos = @speaking.speaking_logos.active.ordered.with_attached_image
   end
 
   def cv
