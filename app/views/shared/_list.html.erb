@@ -22,26 +22,29 @@
       <% end %>
     </ul>
 
-    <%# ── About / CV / Contact ─────────────────────────────────── %>
+    <%# ── Work / Speaking / About ─────────────────────────────────── %>
     <% base_index = @works.size %>
 
     <li>
-      <% is_active = current_page?(about_path) ? "color-active#{(base_index + 1) % 4}" : "color-hover#{(base_index + 1) % 4}" %>
-      <%= link_to "About", about_path, class: "link #{is_active}" %>
+      <% is_active = current_page?(speaking_path) ? "color-active#{(base_index + 1) % 4}" : "color-hover#{(base_index + 1) % 4}" %>
+      <%= link_to "Speaking", speaking_path, class: "link #{is_active}" %>
     </li>
     <li>
-      <% is_active = current_page?(cv_path) ? "color-active#{(base_index + 2) % 4}" : "color-hover#{(base_index + 2) % 4}" %>
+      <% is_active = current_page?(about_path) ? "color-active#{(base_index + 2) % 4}" : "color-hover#{(base_index + 2) % 4}" %>
+      <%= link_to "About", about_path, class: "link #{is_active}" %>
+    </li>
+
+    <%# ── CV / Contact / Newsletter ─────────────────────────────────── %>
+    <li class="margintop2">
+      <% is_active = current_page?(cv_path) ? "color-active#{(base_index + 3) % 4}" : "color-hover#{(base_index + 3) % 4}" %>
       <%= link_to "CV", cv_path, class: "link #{is_active}" %>
     </li>
     <li>
-      <% is_active = current_page?(contact_path) ? "color-active#{(base_index + 3) % 4}" : "color-hover#{(base_index + 3) % 4}" %>
+      <% is_active = current_page?(contact_path) ? "color-active#{(base_index + 4) % 4}" : "color-hover#{(base_index + 4) % 4}" %>
       <%= link_to "Contact", contact_path, class: "link #{is_active}" %>
     </li>
-
-
-    <%# ── Newsletter ───────────────────────────────────────────── %>
-    <li class="margintop2">
-      <% is_active = current_page?(newsletter_path) ? "color-active#{(base_index + 4) % 4}" : "color-hover#{(base_index + 4) % 4}" %>
+    <li>
+      <% is_active = current_page?(newsletter_path) ? "color-active#{(base_index + 5) % 4}" : "color-hover#{(base_index + 5) % 4}" %>
       <%= link_to "Newsletter", newsletter_path, class: "link #{is_active}" %>
     </li>
 

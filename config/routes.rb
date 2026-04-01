@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   root "works#index"
   resources :works, only: %i[index show]
 
+    get 'speaking', to: 'profil#speaking'
     get 'cv', to: 'profil#cv'
     get 'about', to: 'profil#about'
     get 'contact', to: 'profil#contact'
