@@ -35,6 +35,10 @@ class Speaking < ApplicationRecord
     false
   end
 
+  def self.admin_logo_backend_ready?
+    table_available? && logos_available?
+  end
+
   def active_logos_for_frontend
     return SpeakingLogo.none unless self.class.logos_available?
 

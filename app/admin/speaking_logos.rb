@@ -1,7 +1,7 @@
 ActiveAdmin.register SpeakingLogo do
   permit_params :speaking_id, :name, :destination_url, :alt_text, :link_label, :position, :active, :image
 
-  menu priority: 7, label: 'Speaking Logos'
+  menu priority: 7, label: 'Speaking Logos', if: proc { Speaking.admin_logo_backend_ready? }
 
   includes :speaking, image_attachment: :blob
 
@@ -86,6 +86,8 @@ ActiveAdmin.register SpeakingLogo do
   filter :speaking
 
   controller do
+    before_action :ensure_speaking_logo_backend_ready!
+
     def scoped_collection
       super.includes(:speaking, image_attachment: :blob).ordered
     end
@@ -96,6 +98,16 @@ ActiveAdmin.register SpeakingLogo do
       end
 
       super
+    end
+
+    private
+
+    def ensure_speaking_logo_backend_ready!
+      return if Speaking.admin_logo_backend_ready?
+
+      redirect_to admin_speaking_path(Speaking.safe_instance.id), alert: 'Speaking logos are unavailable until the logo migrations and Active Storage tables are present.'
+    rescue StandardError
+      redirect_to admin_root_path, alert: 'Speaking logos are unavailable until the logo migrations and Active Storage tables are present.'
     end
   end
 end

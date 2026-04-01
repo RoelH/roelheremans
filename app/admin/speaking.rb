@@ -4,7 +4,9 @@ ActiveAdmin.register Speaking do
   config.filters = false
 
   action_item :manage_logos, only: %i[index show edit] do
-    link_to 'Manage Logos', admin_speaking_logos_path
+    if Speaking.admin_logo_backend_ready?
+      link_to 'Manage Logos', admin_speaking_logos_path
+    end
   end
 
   form do |f|
@@ -30,11 +32,15 @@ ActiveAdmin.register Speaking do
     end
 
     panel 'Speaking Logos' do
-      table_for resource.speaking_logos.ordered do
-        column :position
-        column :name
-        column :active
-        column :destination_url
+      if Speaking.admin_logo_backend_ready?
+        table_for resource.speaking_logos.ordered do
+          column :position
+          column :name
+          column :active
+          column :destination_url
+        end
+      else
+        para 'Speaking logos are unavailable until the logo and Active Storage tables exist in this environment.'
       end
     end
   end
