@@ -7,6 +7,7 @@ class ProfilController < ApplicationController
   def speaking
     @speaking = Speaking.safe_instance
     @speaking_logos = @speaking.active_logos_for_frontend
+    @speaking_videos = @speaking.videos_for_frontend
   end
 
   def cv

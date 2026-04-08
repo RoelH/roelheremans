@@ -21,6 +21,13 @@
         <div class="paragraph">
         <%= simple_format(@speaking.text) %>
         </div>
+        <% @speaking_videos.each do |video| %>
+          <% if video.embed_url.present? %>
+            <div class="video video-container">
+              <iframe width="" height="" src="<%= video.embed_url %>" frameborder="0" allowfullscreen></iframe>
+            </div>
+          <% end %>
+        <% end %>
         <%= render 'speaking_logos', speaking_logos: @speaking_logos %>
       </div>
     </div>

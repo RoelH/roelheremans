@@ -1,12 +1,15 @@
 class Speaking < ApplicationRecord
   has_many :speaking_logos, -> { order(:position, :id) }, dependent: :destroy
+  has_many :videos, dependent: :destroy
+
+  accepts_nested_attributes_for :videos, allow_destroy: true
 
   def self.ransackable_attributes(auth_object = nil)
     %w[id text pic_url slug seo_title seo_description created_at updated_at]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[speaking_logos]
+    %w[speaking_logos videos]
   end
 
   def self.instance
@@ -35,8 +38,19 @@ class Speaking < ApplicationRecord
     false
   end
 
+  def self.videos_available?
+    connection.data_source_exists?("videos") &&
+      connection.column_exists?("videos", "speaking_id")
+  rescue ActiveRecord::ActiveRecordError
+    false
+  end
+
   def self.admin_logo_backend_ready?
     table_available? && logos_available?
+  end
+
+  def self.admin_video_backend_ready?
+    table_available? && videos_available?
   end
 
   def self.admin_backend_ready?
@@ -49,6 +63,14 @@ class Speaking < ApplicationRecord
     speaking_logos.active.ordered.with_attached_image
   rescue ActiveRecord::ActiveRecordError
     SpeakingLogo.none
+  end
+
+  def videos_for_frontend
+    return Video.none unless self.class.videos_available?
+
+    videos.order(:id)
+  rescue ActiveRecord::ActiveRecordError
+    Video.none
   end
 
   def self.fallback_instance

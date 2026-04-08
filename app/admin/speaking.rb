@@ -1,5 +1,6 @@
 ActiveAdmin.register Speaking do
-  permit_params :text, :pic_url, :slug, :seo_title, :seo_description
+  permit_params :text, :pic_url, :slug, :seo_title, :seo_description,
+                videos_attributes: [:id, :url, :cover, :_destroy]
 
   menu if: proc { Speaking.admin_backend_ready? }
 
@@ -18,6 +19,14 @@ ActiveAdmin.register Speaking do
       f.input :slug
       f.input :seo_title
       f.input :seo_description
+    end
+    if Speaking.admin_video_backend_ready?
+      f.inputs 'Videos' do
+        f.has_many :videos, heading: false, allow_destroy: true do |video|
+          video.input :url
+          video.input :cover, as: :boolean
+        end
+      end
     end
     f.actions
   end
@@ -43,6 +52,17 @@ ActiveAdmin.register Speaking do
         end
       else
         para 'Speaking logos are unavailable until the logo and Active Storage tables exist in this environment.'
+      end
+    end
+
+    panel 'Videos' do
+      if Speaking.admin_video_backend_ready?
+        table_for resource.videos.order(:id) do
+          column :url
+          column :cover
+        end
+      else
+        para 'Speaking videos are unavailable until the video migration is present in this environment.'
       end
     end
   end
