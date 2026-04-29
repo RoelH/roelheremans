@@ -1,5 +1,5 @@
 ActiveAdmin.register SpeakingLogo do
-  permit_params :speaking_id, :name, :destination_url, :alt_text, :link_label, :position, :active, :image
+  permit_params :speaking_id, :name, :destination_url, :image_url, :alt_text, :link_label, :position, :active, :image
 
   menu priority: 7, label: 'Speaking Logos', if: proc { Speaking.admin_logo_backend_ready? }
 
@@ -32,9 +32,12 @@ ActiveAdmin.register SpeakingLogo do
     column :name
     column :alt_text
     column :destination_url
+    column :image_url
     column :link_label
     column :image do |logo|
-      if logo.image.attached?
+      if logo.image_url.present?
+        image_tag logo.image_url, style: 'max-height: 40px; width: auto;'
+      elsif logo.image.attached?
         image_tag url_for(logo.image), style: 'max-height: 40px; width: auto;'
       end
     end
@@ -52,11 +55,12 @@ ActiveAdmin.register SpeakingLogo do
       f.input :speaking, collection: [[speaking.slug.presence || 'Speaking', speaking.id]]
       f.input :name, hint: 'Internal/visible brand or institution name.'
       f.input :destination_url, hint: 'Full URL including https://'
+      f.input :image_url, hint: 'Optional Cloudinary logo image URL. If present, this is used instead of the uploaded file.'
       f.input :alt_text, hint: 'Describe the institution shown by the logo.'
       f.input :link_label, hint: 'Optional extra accessible label for the link.'
       f.input :position, hint: 'Lower numbers appear first.'
       f.input :active
-      f.input :image, as: :file, hint: (image_tag(url_for(f.object.image), style: 'max-height: 60px; width: auto;') if f.object.image.attached?)
+      f.input :image, as: :file, hint: (image_tag(f.object.image_source, style: 'max-height: 60px; width: auto;') if f.object.image_url.present? || f.object.image.attached?)
     end
     f.actions
   end
@@ -66,12 +70,15 @@ ActiveAdmin.register SpeakingLogo do
       row :speaking
       row :name
       row :destination_url
+      row :image_url
       row :alt_text
       row :link_label
       row :position
       row :active
       row :image do |logo|
-        if logo.image.attached?
+        if logo.image_url.present?
+          image_tag logo.image_url, style: 'max-height: 90px; width: auto;'
+        elsif logo.image.attached?
           image_tag url_for(logo.image), style: 'max-height: 90px; width: auto;'
         end
       end

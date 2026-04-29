@@ -18,11 +18,14 @@ class SpeakingLogo < ApplicationRecord
   validates :destination_url,
             format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "must be a valid HTTP(S) URL" },
             allow_blank: true
-  validates :image, presence: true
+  validates :image_url,
+            format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "must be a valid HTTP(S) URL" },
+            allow_blank: true
+  validate :image_source_present
   validate :active_logos_need_destination_url
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[id speaking_id name destination_url alt_text link_label position active created_at updated_at]
+    %w[id speaking_id name destination_url image_url alt_text link_label position active created_at updated_at]
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -41,6 +44,10 @@ class SpeakingLogo < ApplicationRecord
     update!(position: position + 1)
   end
 
+  def image_source
+    image_url.presence || image
+  end
+
   private
 
   def normalize_text_fields
@@ -48,6 +55,7 @@ class SpeakingLogo < ApplicationRecord
     self.alt_text = alt_text.to_s.squish
     self.link_label = link_label.to_s.squish.presence
     self.destination_url = destination_url.to_s.strip.presence
+    self.image_url = image_url.to_s.strip.presence
   end
 
   def assign_position
@@ -99,5 +107,11 @@ class SpeakingLogo < ApplicationRecord
     return unless active? && destination_url.blank?
 
     errors.add(:destination_url, "can't be blank for active logos")
+  end
+
+  def image_source_present
+    return if image_url.present? || image.attached?
+
+    errors.add(:base, "Logo must have an uploaded image or image URL")
   end
 end

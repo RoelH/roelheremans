@@ -3,13 +3,14 @@
     <h2 id="speaking-logos-title" class="speaking-logos__title">Selected organizations</h2>
     <div class="speaking-logos__grid">
       <% speaking_logos.each do |logo| %>
+        <% image_source = logo.image_source %>
         <% image_options = {
           alt: logo.alt_text,
           class: 'speaking-logos__image',
           loading: 'lazy',
           decoding: 'async'
         } %>
-        <% if logo.image.metadata['width'].present? && logo.image.metadata['height'].present? %>
+        <% if logo.image_url.blank? && logo.image.attached? && logo.image.metadata['width'].present? && logo.image.metadata['height'].present? %>
           <% image_options[:width] = logo.image.metadata['width'] %>
           <% image_options[:height] = logo.image.metadata['height'] %>
         <% end %>
@@ -24,13 +25,13 @@
           <% if logo.destination_url.present? %>
             <%= link_to logo.destination_url, **link_options do %>
               <span class="speaking-logos__media">
-                <%= image_tag logo.image, **image_options %>
+                <%= image_tag image_source, **image_options %>
               </span>
             <% end %>
           <% else %>
             <span class="speaking-logos__link speaking-logos__link--static">
               <span class="speaking-logos__media">
-                <%= image_tag logo.image, **image_options %>
+                <%= image_tag image_source, **image_options %>
               </span>
             </span>
           <% end %>
