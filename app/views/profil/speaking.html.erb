@@ -18,6 +18,7 @@
         <div class="image">
           <%= image_tag @speaking.pic_url if @speaking.pic_url.present? %>
         </div>
+        <%= render 'speaking_logos', speaking_logos: @speaking_logos %>
         <div class="paragraph">
         <%= simple_format(@speaking.text) %>
         </div>
@@ -28,7 +29,6 @@
             </div>
           <% end %>
         <% end %>
-        <%= render 'speaking_logos', speaking_logos: @speaking_logos %>
       </div>
     </div>
   </div>

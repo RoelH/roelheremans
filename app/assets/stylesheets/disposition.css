@@ -203,7 +203,7 @@ height: 100%;
 }
 
 .speaking-logos {
-  margin-top: 2.5rem;
+  margin: 0 0 2.5rem;
 }
 
 .speaking-logos__title {
@@ -281,7 +281,7 @@ height: 100%;
   }
 
   .speaking-logos {
-    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .speaking-logos__grid {
