@@ -11,13 +11,14 @@ import { Controller } from "@hotwired/stimulus"
 //   list     — the <ul> that wraps all project links (collapsible container)
 //
 // Color behaviour (matches existing 4-color system):
+//   The project list opens automatically on work pages and stays compact on
+//   profile pages such as Speaking.
 //   When the list is open and NO individual project is active, "Work" is colored.
 //   When the list is open and a project IS active, "Work" returns to black
 //   (the active project link already carries the color).
 //   The color assigned to "Work" when open is color-active0 (blue #0170C0),
 //   chosen as a neutral accent that doesn't conflict with the per-project cycling.
 
-const LS_KEY = "work-nav-open"
 const OPEN_COLOR_CLASS = "color-active0"
 
 export default class extends Controller {
@@ -25,8 +26,8 @@ export default class extends Controller {
   static values  = { onWorkPage: Boolean }
 
   connect() {
-    // Auto-expand when on a work page, or restore localStorage preference.
-    const shouldOpen = this.onWorkPageValue || localStorage.getItem(LS_KEY) === "true"
+    // Keep project links expanded on work pages only; profile pages stay compact.
+    const shouldOpen = this.onWorkPageValue
     if (shouldOpen) {
       this._open(false) // instant, no animation on first render
     } else {
@@ -61,7 +62,6 @@ export default class extends Controller {
     if (!this._hasActiveWork()) {
       this.triggerTarget.classList.add(OPEN_COLOR_CLASS)
     }
-    localStorage.setItem(LS_KEY, "true")
   }
 
   _close(animate) {
@@ -76,7 +76,6 @@ export default class extends Controller {
       })
     }
     this.triggerTarget.classList.remove(OPEN_COLOR_CLASS)
-    localStorage.setItem(LS_KEY, "false")
   }
 
   // Returns true if any child link inside the list carries an active color class.
