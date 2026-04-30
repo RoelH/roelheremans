@@ -16,7 +16,7 @@
       <div class="work">
       <div class="entete"><h1>Speaking</h1></div>
         <div class="image">
-          <%= image_tag @speaking.pic_url if @speaking.pic_url.present? %>
+          <%= image_tag cloudinary_delivery_url(@speaking.pic_url, width: 1200) if @speaking.pic_url.present? %>
         </div>
         <%= render 'speaking_logos', speaking_logos: @speaking_logos %>
         <div class="paragraph">

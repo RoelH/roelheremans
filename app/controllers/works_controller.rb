@@ -1,13 +1,13 @@
 class WorksController < ApplicationController
 
   def index
-    @works = Work.order(year: :desc)
+    @works = Work.includes(:photos, :videos).order(year: :desc)
 
   end
 
   def show
-    @works = Work.order(year: :desc)
-    @work = Work.friendly.find(params[:id])
+    @works = Work.select(:id, :title, :year, :slug).order(year: :desc)
+    @work = Work.includes(:photos, :videos).friendly.find(params[:id])
     # render 'works/show'
 
   end

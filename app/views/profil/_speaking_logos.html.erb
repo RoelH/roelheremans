@@ -3,7 +3,7 @@
     <h2 id="speaking-logos-title" class="speaking-logos__title">Selected organizations</h2>
     <div class="speaking-logos__grid">
       <% speaking_logos.each do |logo| %>
-        <% image_source = logo.image_source %>
+        <% image_source = logo.image_url.present? ? cloudinary_delivery_url(logo.image_url, width: 320) : logo.image_source %>
         <% image_options = {
           alt: logo.alt_text,
           class: 'speaking-logos__image',

@@ -21,6 +21,14 @@ class Work < ApplicationRecord
     %w[photos videos]
   end
 
+  def cover_photo
+    photos.loaded? ? photos.detect(&:cover?) : photos.find_by(cover: true)
+  end
+
+  def cover_video
+    videos.loaded? ? videos.detect(&:cover?) : videos.find_by(cover: true)
+  end
+
 
 private
 

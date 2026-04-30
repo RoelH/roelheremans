@@ -36,7 +36,7 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
 
     assert portrait_index.present?
     assert logos_index.present?
-    assert_includes body, "https://res.cloudinary.com/dmbutdgsi/image/upload/v1777464448/mentalprivacy_29_04_26_14_07_27.png"
+    assert_includes body, "https://res.cloudinary.com/dmbutdgsi/image/upload/f_auto,q_auto,w_320/v1777464448/mentalprivacy_29_04_26_14_07_27.png"
     assert text_index.present?
     assert video_index.present?
     assert_operator portrait_index, :<, logos_index

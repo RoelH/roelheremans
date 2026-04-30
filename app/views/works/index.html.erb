@@ -10,10 +10,10 @@
       <% @works.each do |w|%>
         <div class="work">
             <%= link_to work_path(w) do %>
-            <% cover_photo = w.photos.where(cover: true).first%>
-            <% cover_video = w.videos.where(cover: true).first%>
+            <% cover_photo = w.cover_photo %>
+            <% cover_video = w.cover_video %>
               <%if cover_photo %>
-                <%=image_tag cover_photo.url.sub('/upload/' ,'/upload/w_1500/')%>
+                <%= image_tag cloudinary_delivery_url(cover_photo.url, width: 1200) %>
               <%elsif cover_video%>
                 <div class="video-container">
                   <iframe width="" height="" src="https://www.youtube.com/embed/<%=cover_video.youtube_id%>" frameborder="0" allowfullscreen></iframe>

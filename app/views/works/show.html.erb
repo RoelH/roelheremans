@@ -15,7 +15,7 @@
 
           <%first_photo = @work.photos[0]%>
             <% if first_photo.present?%>
-              <%= image_tag first_photo.url, alt: first_photo.legend %>
+              <%= image_tag cloudinary_delivery_url(first_photo.url, width: 1200), alt: first_photo.legend %>
               <% if first_photo.legend.present?%>
                   <p class="legend"><%= first_photo.legend %></p>
               <%end %>
@@ -37,7 +37,7 @@
           <%other_photos = @work.photos.drop(1) %>
           <% other_photos.each do |photo| %>
             <div class="image">
-              <%= image_tag photo.url, alt: photo.legend, class: 'work-photo' %>
+              <%= image_tag cloudinary_delivery_url(photo.url, width: 1200), alt: photo.legend, class: 'work-photo' %>
               <% if photo.legend.present?%>
                 <p class="legend"><%= photo.legend %></p>
               <%end %>

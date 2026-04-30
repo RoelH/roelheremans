@@ -1,7 +1,7 @@
 <% on_work_page = local_assigns[:on_work_page] || false %>
 <div class="list" data-controller="work-toggle" data-work-toggle-on-work-page-value="<%= on_work_page %>">
   <%= link_to root_path do %>
-    <%=image_tag 'https://res.cloudinary.com/dmbutdgsi/image/upload/v1611342976/logo_ef1290df81.png', class:"logo" %>
+    <%= image_tag cloudinary_delivery_url('https://res.cloudinary.com/dmbutdgsi/image/upload/v1611342976/logo_ef1290df81.png', width: 40), class: "logo" %>
   <%end %>
   <ul>
 
