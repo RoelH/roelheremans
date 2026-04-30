@@ -21,15 +21,24 @@
 body{
   background-color: #f9f9f9;
   height: 100%;
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-size: 75%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 72%;
   margin: 0;
+  color: #323537;
 
 }
 
 html{
   height: 100%;
   line-height: 1.15;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 a,
