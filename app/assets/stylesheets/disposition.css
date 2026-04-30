@@ -257,6 +257,10 @@ height: 100%;
   object-fit: contain;
 }
 
+.speaking-logos__item:first-child .speaking-logos__image {
+  max-height: 4.1rem;
+}
+
 @media (max-width: 900px) {
   .speaking-logos__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -290,10 +294,16 @@ height: 100%;
   }
 
   .speaking-logos__media {
-    min-height: 3rem;
+    min-height: 2.6rem;
   }
 
   .speaking-logos__image {
-    max-height: 2.5rem;
+    max-width: 82%;
+    max-height: 2rem;
+  }
+
+  .speaking-logos__item:first-child .speaking-logos__image {
+    max-width: 88%;
+    max-height: 2.4rem;
   }
 }
