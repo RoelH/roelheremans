@@ -4,6 +4,22 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
   self.fixture_table_names = []
   self.fixture_sets = {}
 
+  test "home and about pages publish person structured data" do
+    Profil.create!(
+      about: "About marker",
+      pic_url: "https://example.com/about.jpg"
+    )
+
+    [root_path, about_path].each do |path|
+      get path
+
+      assert_response :success
+      schema = Nokogiri::HTML(response.body).at_css("script[type='application/ld+json']")
+      assert schema.present?
+      assert_includes schema.text, "https://www.wikidata.org/wiki/Q140002789"
+    end
+  end
+
   test "speaking page publishes honest metadata and person structured data" do
     Speaking.create!(
       text: "#{ProfilHelper::LEGACY_SPEAKING_INTRO_SENTENCES.first} His presentations and workshops help audiences think clearly.",
@@ -15,6 +31,7 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "title", ApplicationHelper::DEFAULT_META_TITLE
     assert_select "meta[name='description'][content=?]", ApplicationHelper::DEFAULT_META_DESCRIPTION
+    assert_select "a[href='https://www.wikidata.org/wiki/Q140002789'][rel='me']", "Wikidata"
 
     document = Nokogiri::HTML(response.body)
     schema = document.at_css("script[type='application/ld+json']")
