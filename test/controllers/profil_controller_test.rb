@@ -14,6 +14,7 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
       get path
 
       assert_response :success
+      assert_select "link[rel='me'][href='https://www.wikidata.org/wiki/Q140002789']"
       schema = Nokogiri::HTML(response.body).at_css("script[type='application/ld+json']")
       assert schema.present?
       assert_includes schema.text, "https://www.wikidata.org/wiki/Q140002789"
@@ -31,7 +32,8 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "title", ApplicationHelper::DEFAULT_META_TITLE
     assert_select "meta[name='description'][content=?]", ApplicationHelper::DEFAULT_META_DESCRIPTION
-    assert_select "a[href='https://www.wikidata.org/wiki/Q140002789'][rel='me']", "Wikidata"
+    assert_select "link[rel='me'][href='https://www.wikidata.org/wiki/Q140002789']"
+    assert_select "a[href='https://www.wikidata.org/wiki/Q140002789'][rel='me']", false
 
     document = Nokogiri::HTML(response.body)
     schema = document.at_css("script[type='application/ld+json']")
