@@ -1,12 +1,3 @@
-<% content_for :head do %>
-  <% if @speaking.seo_title.present? %>
-    <title><%= @speaking.seo_title %></title>
-  <% end %>
-  <% if @speaking.seo_description.present? %>
-    <meta name="description" content="<%= @speaking.seo_description %>">
-  <% end %>
-<% end %>
-
 <div class="flex">
   <div class="scroll">
       <%= render 'shared/list'%>
@@ -20,7 +11,9 @@
         </div>
         <%= render 'speaking_logos', speaking_logos: @speaking_logos %>
         <div class="paragraph">
-        <%= simple_format(@speaking.text) %>
+          <p><%= canonical_bio_sentence %></p>
+          <% speaking_body = speaking_body_without_canonical_intro(@speaking.text) %>
+          <%= simple_format(speaking_body) if speaking_body.present? %>
         </div>
         <% @speaking_videos.each do |video| %>
           <% if video.embed_url.present? %>

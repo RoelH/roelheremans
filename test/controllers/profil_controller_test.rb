@@ -4,6 +4,30 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
   self.fixture_table_names = []
   self.fixture_sets = {}
 
+  test "speaking page publishes honest metadata and person structured data" do
+    Speaking.create!(
+      text: "#{ProfilHelper::LEGACY_SPEAKING_INTRO_SENTENCES.first} His presentations and workshops help audiences think clearly.",
+      pic_url: "https://example.com/portrait.jpg"
+    )
+
+    get speaking_path
+
+    assert_response :success
+    assert_select "title", ApplicationHelper::DEFAULT_META_TITLE
+    assert_select "meta[name='description'][content=?]", ApplicationHelper::DEFAULT_META_DESCRIPTION
+
+    document = Nokogiri::HTML(response.body)
+    schema = document.at_css("script[type='application/ld+json']")
+    assert schema.present?
+    assert_includes schema.text, "https://www.wikidata.org/wiki/Q140002789"
+    assert_includes schema.text, "Neurotechnology Artist"
+    assert_includes schema.text, "Keynote Speaker"
+
+    first_body_sentence = document.at_css(".paragraph p")&.text
+    assert_equal ProfilHelper::CANONICAL_BIO_SENTENCE, first_body_sentence
+    assert_not_includes response.body, ProfilHelper::LEGACY_SPEAKING_INTRO_SENTENCES.first
+  end
+
   test "speaking page places logos between portrait and content" do
     speaking = Speaking.create!(
       text: "Speaking body marker",
