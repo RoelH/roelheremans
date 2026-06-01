@@ -22,16 +22,21 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "speaking page publishes honest metadata and person structured data" do
+    seo_title = "Roel Heremans | AI & Neurotechnology Keynote Speaker, Talks & Workshops"
+    seo_description = "Roel Heremans is a keynote speaker and transdigital artist offering talks and workshops on AI, neurotechnology, human-AI interaction, mental privacy, and creativity after AI."
+
     Speaking.create!(
-      text: "#{ProfilHelper::LEGACY_SPEAKING_INTRO_SENTENCES.first} His presentations and workshops help audiences think clearly.",
-      pic_url: "https://example.com/portrait.jpg"
+      text: "Backend controlled speaking body marker",
+      pic_url: "https://example.com/portrait.jpg",
+      seo_title: seo_title,
+      seo_description: seo_description
     )
 
     get speaking_path
 
     assert_response :success
-    assert_select "title", ApplicationHelper::DEFAULT_META_TITLE
-    assert_select "meta[name='description'][content=?]", ApplicationHelper::DEFAULT_META_DESCRIPTION
+    assert_select "title", seo_title
+    assert_select "meta[name='description'][content=?]", seo_description
     assert_select "link[rel='me'][href='https://www.wikidata.org/wiki/Q140002789']"
     assert_select "a[href='https://www.wikidata.org/wiki/Q140002789'][rel='me']", false
 
@@ -41,30 +46,7 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
     assert_includes schema.text, "https://www.wikidata.org/wiki/Q140002789"
     assert_includes schema.text, "Neurotechnology Artist"
     assert_includes schema.text, "Keynote Speaker"
-
-    first_body_sentence = document.at_css(".paragraph p")&.text
-    assert_equal ProfilHelper::CANONICAL_BIO_SENTENCE, first_body_sentence
-    assert_not_includes response.body, ProfilHelper::LEGACY_SPEAKING_INTRO_SENTENCES.first
-  end
-
-  test "speaking page removes duplicated intro variant from editable body" do
-    production_intro = "<strong>Roel Heremans</strong> is a keynote speaker and transdigital artist whose talks examine how neurotechnology and AI are changing perception, attention, and imagination."
-
-    Speaking.create!(
-      text: "#{production_intro} His presentations and workshops help audiences think more clearly about human-AI interaction, neuroethics, and mental privacy.",
-      pic_url: "https://example.com/portrait.jpg"
-    )
-
-    get speaking_path
-
-    assert_response :success
-
-    document = Nokogiri::HTML(response.body)
-    paragraphs = document.css(".paragraph p").map(&:text)
-
-    assert_equal ProfilHelper::CANONICAL_BIO_SENTENCE, paragraphs.first
-    assert_not_includes document.at_css(".paragraph").text, "keynote speaker and transdigital artist"
-    assert_includes document.at_css(".paragraph").text, "His presentations and workshops help audiences think more clearly"
+    assert_includes document.at_css(".paragraph").text, "Backend controlled speaking body marker"
   end
 
   test "speaking page places logos between portrait and content" do
