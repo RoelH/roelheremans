@@ -47,6 +47,26 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, ProfilHelper::LEGACY_SPEAKING_INTRO_SENTENCES.first
   end
 
+  test "speaking page removes duplicated intro variant from editable body" do
+    production_intro = "<strong>Roel Heremans</strong> is a keynote speaker and transdigital artist whose talks examine how neurotechnology and AI are changing perception, attention, and imagination."
+
+    Speaking.create!(
+      text: "#{production_intro} His presentations and workshops help audiences think more clearly about human-AI interaction, neuroethics, and mental privacy.",
+      pic_url: "https://example.com/portrait.jpg"
+    )
+
+    get speaking_path
+
+    assert_response :success
+
+    document = Nokogiri::HTML(response.body)
+    paragraphs = document.css(".paragraph p").map(&:text)
+
+    assert_equal ProfilHelper::CANONICAL_BIO_SENTENCE, paragraphs.first
+    assert_not_includes document.at_css(".paragraph").text, "keynote speaker and transdigital artist"
+    assert_includes document.at_css(".paragraph").text, "His presentations and workshops help audiences think more clearly"
+  end
+
   test "speaking page places logos between portrait and content" do
     speaking = Speaking.create!(
       text: "Speaking body marker",

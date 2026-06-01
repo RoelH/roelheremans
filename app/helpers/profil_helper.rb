@@ -3,6 +3,10 @@ module ProfilHelper
   LEGACY_SPEAKING_INTRO_SENTENCES = [
     "Roel Heremans is a keynote speaker and transdigital artist whose talks examine how AI and neurotechnology are changing perception, attention and imagination."
   ].freeze
+  LEADING_SPEAKING_INTRO_PATTERNS = [
+    /\A#{Regexp.escape(CANONICAL_BIO_SENTENCE)}\s*/m,
+    /\A(?:<(?:strong|b)>\s*)?Roel Heremans(?:\s*<\/(?:strong|b)>)? is a keynote speaker and transdigital artist whose talks examine how (?:AI and neurotechnology|neurotechnology and AI) are changing perception, attention,? and imagination\.\s*/im
+  ].freeze
 
   def canonical_bio_sentence
     CANONICAL_BIO_SENTENCE
@@ -11,10 +15,10 @@ module ProfilHelper
   def speaking_body_without_canonical_intro(text)
     body = text.to_s.strip
 
-    ([CANONICAL_BIO_SENTENCE] + LEGACY_SPEAKING_INTRO_SENTENCES).each do |sentence|
-      body = body.sub(/\A#{Regexp.escape(sentence)}\s*/m, "")
+    LEADING_SPEAKING_INTRO_PATTERNS.each do |pattern|
+      body = body.sub(pattern, "")
     end
 
-    body
+    body.strip
   end
 end
