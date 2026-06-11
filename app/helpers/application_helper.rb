@@ -1,16 +1,16 @@
 module ApplicationHelper
   CLOUDINARY_IMAGE_UPLOAD_SEGMENT = "/image/upload/".freeze
-  DEFAULT_META_TITLE = "Roel Heremans | Neurotechnology Artist and Keynote Speaker".freeze
-  DEFAULT_META_DESCRIPTION = "Roel Heremans is a neurotechnology artist and keynote speaker on neurorights, brain-computer interfaces, mental privacy, AI, and the future of human experience.".freeze
+  DEFAULT_META_TITLE = "Roel Heremans | Neurotech Artist and Keynote Speaker".freeze
+  DEFAULT_META_DESCRIPTION = "Roel Heremans is a neurotech artist and keynote speaker on neurorights, brain-computer interfaces, mental privacy, AI, and the future of human experience.".freeze
   PERSON_SCHEMA = {
     "@context" => "https://schema.org",
     "@type" => "Person",
     "@id" => "https://www.roelheremans.com/#person",
     "name" => "Roel Heremans",
     "url" => "https://www.roelheremans.com/",
-    "jobTitle" => ["Neurotechnology Artist", "Keynote Speaker"],
+    "jobTitle" => ["Neurotech Artist", "Keynote Speaker"],
     "hasOccupation" => [
-      { "@type" => "Occupation", "name" => "Neurotechnology Artist" },
+      { "@type" => "Occupation", "name" => "Neurotech Artist" },
       { "@type" => "Occupation", "name" => "Keynote Speaker" }
     ],
     "homeLocation" => [

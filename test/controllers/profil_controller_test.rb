@@ -44,7 +44,7 @@ class ProfilControllerTest < ActionDispatch::IntegrationTest
     schema = document.at_css("script[type='application/ld+json']")
     assert schema.present?
     assert_includes schema.text, "https://www.wikidata.org/wiki/Q140002789"
-    assert_includes schema.text, "Neurotechnology Artist"
+    assert_includes schema.text, "Neurotech Artist"
     assert_includes schema.text, "Keynote Speaker"
     assert_includes document.at_css(".paragraph").text, "Backend controlled speaking body marker"
   end
