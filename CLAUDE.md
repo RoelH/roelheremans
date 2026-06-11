@@ -52,10 +52,13 @@ This is the current area of active interest.
   - Note: "neurotech" is the *job title*; "neurotechnology" still appears as a *topic* word on the speaking page (e.g. "AI & Neurotechnology…") — that's intentional, leave it.
   - `cloudinary_delivery_url` — inserts `f_auto,q_auto,w_,h_,c_` transforms into Cloudinary URLs
 - `app/views/layouts/application.html.erb`
-  - `<title>`, meta description, favicon `<link>` (Cloudinary PNG — see line 14, **not** served from `public/`)
+  - `<title>`, meta description, favicon `<link>`s (self-hosted set in `public/` — see Favicon below)
   - Wikidata `rel="me"` link (Q140002789)
   - JSON-LD injection via `person_schema_json`
-- `public/favicon.ico`, `public/apple-touch-icon.png`, `public/apple-touch-icon-precomposed.png` are **0-byte/empty** — the live favicon comes from Cloudinary.
+- **Favicon** (self-hosted in `public/`, no longer Cloudinary):
+  - `favicon.svg` is primary — **bold, theme-adaptive**: the ring + EEG wave flip black/white via `@media (prefers-color-scheme)`; the four colored marks (red top, green right, blue left, yellow bottom) stay fixed.
+  - `favicon.ico` (16/32/48) + `favicon-16.png` / `favicon-32.png` are tab/legacy fallbacks; `apple-touch-icon.png` (+ `-precomposed`, 180×180, **hairline on white**) is the iOS home-screen icon; `favicon-192.png` / `favicon-512.png` + `site.webmanifest` cover PWA.
+  - The "Inner wave" mark = four witnesses around a measured inner image (the IIC). Render wrappers/scripts lived in `tmp/favicon_build/` (not committed).
 
 ## Conventions
 - Content (works, speaking, profil, etc.) is managed through ActiveAdmin (`app/admin/*`), not hardcoded.
