@@ -11,7 +11,7 @@ Roel Heremans' personal website (`roelheremans.com`). Ruby on Rails app.
 - **DB:** PostgreSQL (`pg`)
 - **Images:** Cloudinary (delivered via `cloudinary_delivery_url` helper)
 - **Other:** `friendly_id` (slugs), `kaminari` (pagination)
-- **Deploy:** Fly.io — app `roelheremans`, region `cdg` (see `fly.toml`)
+- **Deploy:** Scalingo — auto-deploys on push to `master` (the `fly.toml` in the repo is not the live host; ignore it)
 
 ## Run / dev
 ```bash
@@ -28,7 +28,7 @@ bin/rails test
 ```
 
 ## Deploy
-Fly.io. `release_command` runs `bin/rails db:prepare`; `postdeploy` runs migrations. Health check hits `/up` (`rails/health#show`).
+**Scalingo**, auto-deployed on push to `master` (no manual deploy command). Procfile/Puma run the app; health check hits `/up` (`rails/health#show`). Note: a `fly.toml` exists in the repo but is not the live host — don't run `fly deploy`.
 
 ## Routes / pages (`config/routes.rb`)
 - `root` → `works#index`
