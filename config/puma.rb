@@ -11,11 +11,19 @@ max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
-# Specifies that the worker count should equal the number of processors in production.
+# Specifies the worker (process) count in production. Default to a small, fixed
+# value: on shared hosts (e.g. Scalingo) `Concurrent.physical_processor_count`
+# reports the *host's* core count (often 16), which would fork far more full
+# Rails processes than the container's RAM can hold, causing an OOM boot-loop.
+# Override per environment with the WEB_CONCURRENCY env var.
 if ENV["RAILS_ENV"] == "production"
-  require "concurrent-ruby"
-  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY") { Concurrent.physical_processor_count })
+  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY") { 2 })
   workers worker_count if worker_count > 1
+
+  # Load the app in the master process before forking workers so they share
+  # memory via copy-on-write. This is what lets multiple workers fit inside a
+  # small (512 MB) container. Active Record reconnects per worker automatically.
+  preload_app!
 end
 
 # Specifies the `worker_timeout` threshold that Puma will use to wait before
